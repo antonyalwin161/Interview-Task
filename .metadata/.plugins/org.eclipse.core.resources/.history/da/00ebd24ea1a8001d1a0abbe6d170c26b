@@ -1,0 +1,53 @@
+package pageObjects;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class AllPages {
+	
+	public WebDriver driver;
+	
+  By covidcases=By.cssSelector("a[class='nav-link']");
+  By countryname=By.xpath("//h4[normalize-space()='India']");
+  By downloadc=By.xpath("//a[normalize-space()='Download Certificate']");
+  By validate=By.xpath("//h5[normalize-space()='Download Certificate in Whatsapp']");
+  By close= By.xpath("//button[normalize-space()='Cancel']");
+  By about= By.xpath("//span[@class='navbar-text']");
+  By validate2=By.xpath("//h5[normalize-space()='About']");
+  
+  
+	public AllPages(WebDriver driver) {
+	// TODO Auto-generated constructor stub
+		this.driver=driver;
+}
+	
+	public WebElement getValidate2()
+	{
+		return driver.findElement(validate2);
+	}
+	public WebElement getAbout()
+	{
+		return driver.findElement(about);
+	}
+	public WebElement getValidate()
+	{
+		return driver.findElement(validate);
+	}
+	public WebElement getClose()
+	{
+		return driver.findElement(close);
+	}
+	public WebElement getDownloadC()
+	{
+		return driver.findElement(downloadc);
+	}
+	public WebElement getCovidCases()
+	{
+		return driver.findElement(covidcases);
+	}
+	public WebElement getCountryName()
+	{
+		return driver.findElement(countryname);
+	}
+}

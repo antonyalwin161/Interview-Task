@@ -1,0 +1,203 @@
+package RegressionTesting;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.Test;
+
+import pageObjects.KYCVerification;
+import pageObjects.LanguageSelect;
+import pageObjects.LoginPage;
+import pageObjects.OTPPage;
+import pageObjects.Wallet;
+import pageObjects.Withdraw;
+import resources.base;
+
+public class Withdrawal extends base{
+	
+	String host="34.93.179.75";
+	String port="3306";
+	//List<WebElement> limit2 = driver.findElements(By.xpath("//span[normalize-space()='2']"));
+	//List<WebElement> limit3 = driver.findElements(By.xpath("//span[normalize-space()='3']"));
+	//List<WebElement> limit1 = driver.findElements(By.xpath("//span[normalize-space()='1']"));
+	
+	@Test(priority=1)
+	public void websiteloadtesting() throws IOException, InterruptedException
+	{
+		driver=initializeDriver();
+		driver.get(prop.getProperty("url"));
+		driver.manage().window().maximize();
+		Thread.sleep(3000);
+		LanguageSelect ls=new LanguageSelect(driver);
+		Assert.assertEquals(ls.getValidateEngHeader().getText(), "Select your language");// To verify header text in english
+		Assert.assertEquals(ls.getValidateEngButton().getText(), "Select");// To verify button text in english
+		ls.getLanguageList().click();// To verify click functionlity form english to hindi
+		Assert.assertEquals(ls.getValidateHindiHeader().getText(), "अपनी भाषा चुनें");//To verify header text in hindi
+		Assert.assertEquals(ls.getValidateHindiButton().getText(), "चुनें");// To verify button text in english
+		ls.getLanguageList2().click();// To verify click functionlity form hindi to english
+		ls.getClickButton().click();// click on select button.
+		ls.getSkipButton().click();//click on skip button.
+		Thread.sleep(7000);
+		ls.getLoginButton().click();// Click button to get register popup.
+		Thread.sleep(2000);
+		ls.getCancelButton().click();//to check cancel button functionality.
+		Thread.sleep(2000);
+		ls.getLoginButton().click();
+		ls.getOkButton().click();//click on ok button.
+		
+	}
+	
+	@Test(priority=2)
+	public void loginpagetesting() throws InterruptedException
+	{
+		LoginPage lp =new LoginPage(driver);
+		Thread.sleep(3000);
+		//Assert.assertEquals(lp.gettext().getText(), "Login with mobile number");
+		lp.getSendOTP().click();
+		Thread.sleep(2000);
+		//Assert.assertEquals(lp.getToastMsg().getText(), "Please enter valid mobile number.");
+		lp.getEnterNumber().click();
+		lp.getEnterNumber().sendKeys("1000000051");
+		lp.getSendOTP().click();
+		
+	}
+	
+	@Test(priority=3)
+	public void otppagetesting() throws InterruptedException, SQLException
+	{
+		OTPPage otp=new OTPPage(driver);
+		//System.out.println(otp.getValidatePage().getText());
+		//System.out.println(otp.getvalidate().getText());
+		Assert.assertEquals(otp.getValidatePage().getText(), "We have sent you an OTP");
+		otp.getClick().click();
+		otp.getEnterOTP().sendKeys("1234");
+		otp.getClickContinue().click();
+		Thread.sleep(2000);
+		Assert.assertEquals(otp.getValidatetoast().getText(), "Incorrect OTP");
+		
+		Connection con =DriverManager.getConnection("jdbc:mysql://" + host +":" + port + "/hpl_auth", "ro_user", "Rw!@#545fdg");
+		Statement s=con.createStatement();
+		ResultSet rs=s.executeQuery("SELECT user_otp FROM hpl_auth.hpl_attempt_user WHERE user_mobile_number ='1000000051'");
+		while(rs.next())
+		{
+		  driver.findElement(By.xpath("//input[@type='tel']")).sendKeys(rs.getString("user_otp"));
+		}
+		Thread.sleep(3000);
+		otp.getClickContinue().click();
+		
+		List<WebElement> skippage = driver.findElements(By.xpath("//span[normalize-space()='Skip']"));
+		if (skippage.size() > 0)
+		{
+			otp.getSkipbtn().click();
+		}
+		else
+		{
+			System.out.println("Hi else");
+			Thread.sleep(5000);
+			Assert.assertEquals(otp.getValidateHomePage().getText(), "Top Games in India");
+			
+		}
+		//driver.switchTo().alert().dismiss();	
+		//WebDriverWait wait = new WebDriverWait(driver,20);
+		//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[normalize-space()=\"Don't Allow\"]")));
+		Thread.sleep(3000);
+		otp.getAlertOff().click();
+		otp.getClickadd().click();
+		Thread.sleep(3000);
+	}
+	@Test(priority=4)
+	public void withdrawtesting() throws InterruptedException, IOException
+	{
+		Wallet wd= new Wallet(driver);
+		//KYCVerification kyc=new KYCVerification(driver);
+		Withdraw wl= new Withdraw(driver);
+		wd.getClickWD().click();
+		wl.getWithdrawBtn().click();
+		//Thread.sleep(1000);
+		//Assert.assertEquals(wl.getWlToast().getText(), "Withdrawable balance not available in your wallet.");
+		
+		List<WebElement> validate = driver.findElements(By.xpath("//span[normalize-space()='Withdrawable balance not available in your wallet.']"));
+		if (validate.size() > 0)
+		{
+			System.out.println("Play more games");
+		}
+		else
+		{
+			wl.getWithdrawBtn().click();
+			Thread.sleep(1000);
+			Assert.assertEquals(wl.gettoast1().getText(), "Please enter valid amount.");
+			wl.getEnteramount().sendKeys("3");
+			wl.getWithdrawBtn().click();
+			Thread.sleep(3000);
+			//Assert.assertEquals(wl.getMinbal().getText(), "Min. withdrawal amount ₹5");
+			wl.getEnteramount().clear();
+			wl.getEnteramount().sendKeys("1001");
+			wl.getWithdrawBtn().click();
+			Thread.sleep(1000);
+			Assert.assertEquals(wl.gettoast2().getText(), "Max amount should be less than 1000 rupees.");
+			wl.getEnteramount().clear();
+			wl.getEnteramount().sendKeys("5");
+			wl.getUPI().click();
+			wl.getWithdrawBtn().click();
+			Assert.assertEquals(wl.getUPIError().getText(), "Please Enter a valid UPI ID");
+			
+			/*wl.getEnterUPi().sendKeys("8097174599@ybl");
+			wl.getWithdrawBtn().click();
+			Assert.assertEquals(wl.getlimitpopup().getText(), "Withdrawal Limits");
+			wl.getOkay().click();
+			Assert.assertEquals(wl.getSuccesspopup().getText(), "Withdraw money successfully");
+			wl.getOk().click();*/
+			
+			/*wl.getEnteramount().clear();
+			wl.getEnteramount().sendKeys("5");
+			wl.getWithdrawBtn().click();
+			Assert.assertEquals(wl.getlimitpopup().getText(), "Withdrawal Limits");
+			wl.getOkay().click();
+			Assert.assertEquals(wl.getSuccesspopup().getText(), "Withdraw money successfully");
+			wl.getOk().click();*/
+			
+			
+			/*wl.getUPI().click();
+			wl.getEnterUPi().sendKeys("8097174599@ybl");
+			wl.getEnteramount().clear();
+			wl.getEnteramount().sendKeys("1000");
+			wl.getWithdrawBtn().click();
+			Assert.assertEquals(wl.getlimitpopup().getText(), "Withdrawal Limits");
+			wl.getOkay().click();
+			//Assert.assertEquals(wl.getSuccesspopup().getText(), "Withdraw money successfully");
+			wl.getOk().click();*/
+			
+			wl.getUPI().click();
+			wl.getEnterUPi().sendKeys("8097174599@ybl");
+			wl.getEnteramount().clear();
+			wl.getEnteramount().sendKeys("1000");
+			wl.getWithdrawBtn().click();
+			Assert.assertEquals(wl.getlimitpopup().getText(), "Withdrawal Limits");
+			wl.getOkay().click();
+			Thread.sleep(1000);
+			Assert.assertEquals(wl.gettoast3().getText(), "Daily withdraw limit exceeded.");
+			
+			
+		}
+	}
+	
+	//@AfterTest
+	public void teardown()
+	{
+		driver.close();
+	}
+}
+
+

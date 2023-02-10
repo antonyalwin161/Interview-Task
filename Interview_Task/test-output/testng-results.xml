@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="5" passed="5" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2023-02-10T13:15:30 IST" name="Default suite" finished-at="2023-02-10T13:15:51 IST" duration-ms="20716">
+    <groups>
+    </groups>
+    <test started-at="2023-02-10T13:15:30 IST" name="Default test" finished-at="2023-02-10T13:15:51 IST" duration-ms="20716">
+      <class name="InterviewTask.Pages">
+        <test-method is-config="true" signature="beforeall()[pri:0, instance:InterviewTask.Pages@957e06]" started-at="2023-02-10T13:15:30 IST" name="beforeall" finished-at="2023-02-10T13:15:32 IST" duration-ms="2329" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeall -->
+        <test-method signature="covidcasepage()[pri:1, instance:InterviewTask.Pages@957e06]" started-at="2023-02-10T13:15:32 IST" name="covidcasepage" finished-at="2023-02-10T13:15:39 IST" duration-ms="6378" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- covidcasepage -->
+        <test-method signature="downloadcertificate()[pri:2, instance:InterviewTask.Pages@957e06]" started-at="2023-02-10T13:15:39 IST" name="downloadcertificate" finished-at="2023-02-10T13:15:42 IST" duration-ms="3133" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- downloadcertificate -->
+        <test-method signature="about()[pri:3, instance:InterviewTask.Pages@957e06]" started-at="2023-02-10T13:15:42 IST" name="about" finished-at="2023-02-10T13:15:49 IST" duration-ms="7630" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- about -->
+        <test-method signature="selectclass()[pri:4, instance:InterviewTask.Pages@957e06]" started-at="2023-02-10T13:15:50 IST" name="selectclass" finished-at="2023-02-10T13:15:50 IST" duration-ms="477" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- selectclass -->
+        <test-method signature="reset()[pri:5, instance:InterviewTask.Pages@957e06]" started-at="2023-02-10T13:15:50 IST" name="reset" finished-at="2023-02-10T13:15:51 IST" duration-ms="532" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- reset -->
+        <test-method is-config="true" signature="teardown()[pri:0, instance:InterviewTask.Pages@957e06]" started-at="2023-02-10T13:15:51 IST" name="teardown" finished-at="2023-02-10T13:15:51 IST" duration-ms="203" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- teardown -->
+      </class> <!-- InterviewTask.Pages -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

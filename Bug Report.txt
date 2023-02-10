@@ -1,0 +1,14 @@
+Bug Summary : Top header tabs not getting highlighted if user clicks on that tab and user is in that page.
+
+Browser: Chrome
+Version : 110.0.5481.78
+
+STR:
+
+1. Enter URL : https://indian-vaccine.web.app/
+2. Click on Covid Cases or Cick on Download Certificate
+3. Observe the header tabs
+
+Actual: Top header tabs not getting highlighted if user clicks on that tab and user is in that page.
+
+Expected: Header tabs must hightlight everytime user clicks on that tabs.
