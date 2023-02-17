@@ -74,24 +74,23 @@ public class Pages extends base{
 	
 	public void selectclass() throws IOException, InterruptedException
 	{
-	//  Test case to select State and City from drop down menu and check slots available and print down the count if not message must be shown
+	//TeAllPages ap=new AllPages(driver);st case to select State and City from drop down menu and check slots available and print down the count if not message must be shown
 		AllPages ap=new AllPages(driver);
 		ap.getHP().click();
 		Select drpState = new Select(ap.getState());
-		drpState.selectByVisibleText("Kerala");
+		drpState.selectByVisibleText("Maharashtra");
 		Select drpCity = new Select(ap.getCity());
-		drpCity.selectByVisibleText("Alappuzha");
-		Thread.sleep(2000);
+		drpCity.selectByVisibleText("Mumbai");
 		
-		String slots = ap.getNoSlots().getText();
-		String sv = "No Slots";
-		if (slots.equals(sv))
+		List<WebElement> slots = driver.findElements(By.xpath("//span[@title='Total Available Slots']"));
+		if (slots.equals(slots))
 		{
-			System.out.println("No Centers Found");
+			System.out.println(ap.getSlotCount().getText());
 		}
 		else
 		{
-			System.out.println(ap.getSlotCount().getText());
+			System.out.println("No Centers Found");
+			
 		}
 		
 	}

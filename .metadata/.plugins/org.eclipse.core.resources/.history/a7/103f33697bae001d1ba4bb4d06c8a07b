@@ -78,20 +78,21 @@ public class Pages extends base{
 		AllPages ap=new AllPages(driver);
 		ap.getHP().click();
 		Select drpState = new Select(ap.getState());
-		drpState.selectByVisibleText("Kerala");
+		drpState.selectByVisibleText("Maharashtra");
 		Select drpCity = new Select(ap.getCity());
-		drpCity.selectByVisibleText("Alappuzha");
+		drpCity.selectByVisibleText("Mumbai");
 		Thread.sleep(2000);
 		
 		String slots = ap.getNoSlots().getText();
 		String sv = "No Slots";
 		if (slots.equals(sv))
 		{
-			System.out.println("No Centers Found");
+			System.out.println(ap.getSlotCount().getText());
 		}
 		else
 		{
-			System.out.println(ap.getSlotCount().getText());
+			System.out.println("No Centers Found");
+			
 		}
 		
 	}
